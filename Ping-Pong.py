@@ -11,6 +11,10 @@ bg = window.fill((200, 255, 255))
 finish = False
 speed_x = 3
 speed_y = 3
+font.init()
+font1 = font.Font(None, 35)
+lose1 = font1.render('Player 1 loses!', True,(180, 0, 0))
+lose2 = font1.render('Player 2 loses!', True,(180, 0, 0))
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):
         super().__init__()
@@ -55,7 +59,15 @@ while game:
             speed_y *= -1
         if sprite.collide_rect(racket1, ball) or sprite.collide_rect(racket2, ball):
             speed_x *= -1
-            
+
+        if ball.rect.x < 0 :
+            finish = True
+            window.blit(lose1, (200, 200))
+
+        if ball.rect.x > 700 :
+            finish = True
+            window.blit(lose2, (200, 200))
+
         racket1.reset()
         racket2.reset()
         ball.reset()
